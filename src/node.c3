@@ -19,7 +19,8 @@ enum NodeType
     COPY,
     PRINT,
     REMOVE,
-    ADD
+    ADD,
+    VAR
 }
 
 enum VersionType
@@ -51,6 +52,7 @@ struct ASTNode
         PrintNode    print_node;
         RemoveNode   remove_node;
         AddNode      add_node;
+        VarNode      var_node;
     }
 }
 
@@ -149,4 +151,10 @@ struct RemoveNode
 struct AddNode
 {
     List{ASTNode*} paths;
+}
+
+struct VarNode
+{
+    String   name;
+    ASTNode* value;
 }

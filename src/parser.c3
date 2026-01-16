@@ -38,6 +38,7 @@ fn ASTNode* parse_stmt(Token[] tokens, int* pos)
         case PRINT:    return parse_print(tokens, pos);
         case REMOVE:   return parse_remove(tokens, pos);
         case ADD:      return parse_add(tokens, pos);
+        case IDENT:    return parse_ident(tokens, pos);
         default:       consume(tokens, pos, TokenType.EOF);
     }
 
@@ -371,6 +372,20 @@ fn ASTNode* parse_add(Token[] tokens, int* pos)
     consume(tokens, pos, TokenType.RPAREN);
 
     *node = { NodeType.ADD, { .add_node = { paths } } };
+    return node;
+}
+
+fn ASTNode* parse_ident(Token[] tokens, int* pos)
+{
+    ASTNode* node = malloc(ASTNode.sizeof);
+    String   name = current(tokens, *pos).value;
+
+    consume(tokens, pos, TokenType.IDENT);
+    consume(tokens, pos, TokenType.EQUALS);
+
+    ASTNode* value = parse_string(tokens, pos);
+
+    *node = { NodeType.VAR, { .var_node = { name, value } } };
     return node;
 }
 

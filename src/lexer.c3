@@ -30,6 +30,7 @@ fn Token[] lex(String content)
 
         if (current(content, pos) == '(') { tokens.push({ LPAREN, "(", { line, col } }); pos++; col++; }
         if (current(content, pos) == ')') { tokens.push({ RPAREN, ")", { line, col } }); pos++; col++; }
+        if (current(content, pos) == '=') { tokens.push({ EQUALS, "=", { line, col } }); pos++; col++; }
 
         if (current(content, pos) == '-' && peek(content, pos) == '-')
         {

@@ -124,7 +124,8 @@ fn String format(String string, ProjectInfo* info)
     while (try match = iter.next())
     {
         String var_name  = match[1].captured;
-        String var_value = ((ZString)info.variables.get(var_name)!!).str_view();
+        if (!info.variables.has_key(var_name)) continue;
+        String var_value = ((ZString)info.variables.get(var_name)).str_view()!!;
         String format    = string::format(mem, "$(%s)", var_name);
         
         result = result.replace(mem, format, var_value);

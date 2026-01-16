@@ -21,6 +21,7 @@ enum TokenType : const inline String
 
     LPAREN     = "(",
     RPAREN     = ")",
+    EQUALS     = "=",
 
     KW_VERSION = "VERSION",
     KW_MIN     = "MIN",

@@ -24,6 +24,7 @@ fn void visit_node(ASTNode* node, ProjectInfo* info)
         case PROJECT:  break;
         case REQUIRE:  break;
         case FIND:     break;
+        case VAR:      break;
         case IFDEF:    visit_ifdef(node, info);
         case OPTION:   visit_option(node, info);
         case TASK:     visit_task(node, info);

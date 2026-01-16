@@ -47,6 +47,7 @@ fn void analyse_node(ASTNode* node, ProjectInfo* info)
         case ADD:      analyse_add(node, info);
         case PRINT:    analyse_print(node, info);
         case CMD:      analyse_cmd(node, info);
+        case VAR:      analyse_var(node, info);
         default:       io::eprintfn("missing sema function >> %s", node.node_type);
     }
 }
@@ -160,7 +161,7 @@ fn void analyse_ifdef(ASTNode* node_in, ProjectInfo* info)
     if (!info.variables.has_key(cond))
     {
         io::eprint(Ansi.RED);
-        io::eprintf("[c3build] could not find variable `%s`.", cond);
+        io::eprintf("[c3build] could not find variable `%s`. >> aborting", cond);
         io::eprintn(Ansi.RESET);
         os::exit(1);
     }
@@ -179,7 +180,7 @@ fn void analyse_task(ASTNode* node_in, ProjectInfo* info)
     if (info.tasks.has_key(name))
     {
         io::eprint(Ansi.RED);
-        io::eprintf("[c3build] task `%s` already defined", name);
+        io::eprintf("[c3build] task `%s` already defined >> aboring", name);
         io::eprintn(Ansi.RESET);
         os::exit(1);
     }
@@ -207,7 +208,7 @@ fn void analyse_program(ASTNode* node_in, ProjectInfo* info)
         if (!info.variables.has_key(link))
         {
             io::eprint(Ansi.RED);
-            io::eprintf("[c3build] could not find variable `%s`.", link);
+            io::eprintf("[c3build] could not find variable `%s`. >> aborting", link);
             io::eprintn(Ansi.RESET);
             os::exit(1);
         }
@@ -274,4 +275,22 @@ fn void analyse_cmd(ASTNode* node_in, ProjectInfo* info)
     CmdNode node = node_in.node.cmd_node;
 
     analyse_node(node.cmd, info);
+}
+
+fn void analyse_var(ASTNode* node_in, ProjectInfo* info)
+{
+    VarNode node  = node_in.node.var_node;
+    String  value = node.value.node.string_node.value;
+    
+    if (info.variables.has_key(node.name))
+    {
+        io::eprint(Ansi.RED);
+        io::eprintf("[c3build] variable `%s` already defined >> aborting", node.name);
+        io::eprintn(Ansi.RESET);
+        os::exit(1);
+    }
+
+    analyse_node(node.value, info);
+    
+    info.variables.set(node.name, util::format(value, info));
 }
