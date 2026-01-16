@@ -73,14 +73,18 @@ fn int main(String[] args)
         return 1;
     }
 
-    if (args.len == 2)
+    if (args.len > 1)
     {
-        if (args[1] == "--task" ||
+        if (args[1] == "--tasks" ||
             args[1] == "-t")
         {
             print_tasks(info);
-        }
-        if (!info.tasks.has_key(args[1]))
+        } else
+        if (args[1] == "--verbose" ||
+            args[1] == "-vv")
+        {
+            info.verbose = true;
+        } else if (!info.tasks.has_key(args[1]))
         {
             print_short_help(args[0]);
         }
@@ -93,6 +97,7 @@ fn int main(String[] args)
         bool all_exists = true;
         for (int i = 1; i < args.len; i++)
         {
+            if (args[i].starts_with("-")) continue;
             if (!info.tasks.has_key(args[i]))
             {
                 all_exists = false;
@@ -122,11 +127,12 @@ fn void print_short_help(String program)
 
 fn void print_help(String program)
 {
-    io::printfn("Usage: %s [command]", program);
+    io::printfn("Usage: %s [command] <task>", program);
     io::printn("Commands:");
     io::printn("  --help    -h       Shows usage help.");
     io::printn("  --tasks   -t       Shows tasks.");
     io::printn("  --version -v       Shows version info.");
+    io::printn("  --verbose -vv      Prints compile command.");
     io::printn("  <task>           Runs the specified task.");
     os::exit(1);
 }

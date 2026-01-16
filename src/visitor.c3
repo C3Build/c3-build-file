@@ -143,6 +143,11 @@ fn void visit_program(ASTNode* node_in, ProjectInfo* info)
         command.push(((ZString)info.variables.get(link)).str_view())!!;
     }
 
+    if (info.verbose)
+    {
+        io::printn(string::join(mem, command.to_array(mem), " "));
+    }
+
     io::printfn("[c3build] Compiling program `%s`", info.name);
 
     SubProcess? process = process::create(command.to_array(mem));

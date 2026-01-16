@@ -18,6 +18,7 @@ struct ProjectInfo
     HashMap{String, List{ASTNode*}} tasks;
     List{String}                    options;
     List{String}                    files;
+    bool                            verbose;
 }
 
 fn void analyse(ASTNode*[] nodes, ProjectInfo* info)

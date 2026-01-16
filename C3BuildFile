@@ -1,5 +1,5 @@
 compiler(VERSION MIN 0.7.1 MAX 0.7.9)
-project(c3build VERSION 0.2.1)
+project(c3build VERSION 0.2.2)
 
 find(EXE "git")
 
