@@ -1,3 +1,6 @@
+# 0.3.1
+- add log for `cmd` statememnt
+
 # 0.3.0
 - add `AUTHOR` section to project definition
 - add variable injection for `AUTHOR` and `VERSION`

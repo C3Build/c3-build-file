@@ -249,11 +249,13 @@ fn void visit_cmd(ASTNode* node_in, ProjectInfo* info)
     String   f_cmd = util::format(s_cmd, info);
     String[] cmd   = f_cmd.split(mem, " ");
 
+    io::printfn("[c3build] Running command `%s`", f_cmd);
+
     SubProcess? process = process::create(cmd);
     if (catch process)
     {
         io::eprint(Ansi.RED);
-        io::eprintf("[c3build] failed to create compile process.");
+        io::eprintf("[c3build] failed to create process.");
         io::eprintn(Ansi.RESET);
         os::exit(1);
     }
@@ -264,13 +266,13 @@ fn void visit_cmd(ASTNode* node_in, ProjectInfo* info)
 
     if (catch process.read_stdout(&stdout_buf, BUF_SIZE))
     {
-        io::eprintn("[c3build] Failed to read stdout from compile command.");
+        io::eprintn("[c3build] Failed to read stdout from command.");
         os::exit(1);
     }
 
     if (catch process.read_stderr(&stderr_buf, BUF_SIZE))
     {
-        io::eprintn("[c3build] Failed to read stderr from compile command.");
+        io::eprintn("[c3build] Failed to read stderr from command.");
         os::exit(1);
     }
 
