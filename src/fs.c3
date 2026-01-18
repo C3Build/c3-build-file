@@ -273,6 +273,7 @@ fn bool is_executable(String path)
         {
             if (ext == extension) return true;
         }
+        return false;
     $else
         Stat stat;
         os::native_stat(&stat, path)!!;

@@ -1,3 +1,6 @@
+# 0.3.4
+- add missing return in `fs::is_executable`
+
 # 0.3.3
 - fix find logic for searching directories
 - fix folder distribution across threads for find file logic

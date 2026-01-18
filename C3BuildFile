@@ -1,6 +1,6 @@
 compiler(VERSION MIN 0.7.1 MAX 0.7.9)
 project(c3build
-        VERSION 0.3.3
+        VERSION 0.3.4
         AUTHOR "Kiana Bennett")
 
 find(EXE "git")
