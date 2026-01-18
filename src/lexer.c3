@@ -64,7 +64,28 @@ fn Token string(String content, int* pos, int line, int* col) => @pool()
 
     while (current(content, *pos) != '"')
     {
-        result.append_char(current(content, *pos));
+        if (current(content, *pos) == '\\')
+        {
+            *pos = *pos + 1;
+            *col = *col + 1;
+
+            switch (current(content, *pos))
+            {
+                case 'n':  result.append_char('\n');
+                case 't':  result.append_char('\t');
+                case 'r':  result.append_char('\r');
+                case '\\': result.append_char('\\');
+                case '\"': result.append_char('\"');
+                case '\'': result.append_char('\'');
+                case 'b':  result.append_char('\b');
+                case 'f':  result.append_char('\f');
+                case 'v':  result.append_char('\v');
+            }
+        } else
+        {
+            result.append_char(current(content, *pos));
+        }
+
         *pos = *pos + 1;
         *col = *col + 1;
     }

@@ -293,5 +293,5 @@ fn void analyse_var(ASTNode* node_in, ProjectInfo* info)
 
     analyse_node(node.value, info);
     
-    info.variables.set(node.name, util::format(value, info));
+    info.variables.set(node.name, null);
 }

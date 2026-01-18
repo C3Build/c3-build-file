@@ -1,3 +1,12 @@
+# 0.3.2
+- add bootstrap scripts
+- update string lexing logic
+- update buildscript for project
+- fixed `fs::is_executable` for windows
+- fixed getting git hash on windows
+- fixed regex for injecting variables in `util::format`
+- fixed file deletion using unformatted path
+
 # 0.3.1
 - add log for `cmd` statememnt
 

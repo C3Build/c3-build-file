@@ -24,7 +24,6 @@ fn void visit_node(ASTNode* node, ProjectInfo* info)
         case PROJECT:  break;
         case REQUIRE:  break;
         case FIND:     break;
-        case VAR:      break;
         case IFDEF:    visit_ifdef(node, info);
         case OPTION:   visit_option(node, info);
         case TASK:     visit_task(node, info);
@@ -35,6 +34,7 @@ fn void visit_node(ASTNode* node, ProjectInfo* info)
         case PRINT:    visit_print(node, info);
         case ADD:      visit_add(node, info);
         case CMD:      visit_cmd(node, info);
+        case VAR:      visit_var(node, info);
         default:       io::printfn("missing visitor function >> %s", node.node_type);
     }
 }
@@ -85,7 +85,7 @@ fn void visit_remove(ASTNode* node_in, ProjectInfo* info)
                 io::printfn("[c3build] deleted directory `%s`", f_path);
             }
         case "FILE":
-            if (catch result = file::delete(path))
+            if (catch result = file::delete(f_path))
             {
                 io::printfn("[c3build] unable to delete file `%s`: %s", f_path, result);
             } else
@@ -156,7 +156,7 @@ fn void visit_program(ASTNode* node_in, ProjectInfo* info)
     if (catch process)
     {
         io::eprint(Ansi.RED);
-        io::eprintf("[c3build] failed to create compile process.");
+        io::eprintf("[c3build] failed to create compile process: %s", process)!!;
         io::eprintn(Ansi.RESET);
         os::exit(1);
     }
@@ -213,7 +213,7 @@ fn void visit_copy(ASTNode* node_in, ProjectInfo* info)
 
     String f_source = util::format(source, info);
     String f_dest   = util::format(dest, info);
-    
+
     switch (type)
     {
         case "DIR":
@@ -285,4 +285,12 @@ fn void visit_cmd(ASTNode* node_in, ProjectInfo* info)
     {
         io::eprintn((ZString)&stderr_buf);
     }
+}
+
+fn void visit_var(ASTNode* node_in, ProjectInfo* info)
+{
+    VarNode node  = node_in.node.var_node;
+    String  value = node.value.node.string_node.value;
+    
+    info.variables.set(node.name, util::format(value, info));
 }

@@ -251,11 +251,11 @@ fn bool is_shared_library(String path)
     String extension = path.to_path(mem).extension()!!;
     
     $if env::WIN32:
-        return extension == ".dll" || extension == ".lib";
+        return extension == "dll" || extension == "lib";
     $else $if env::DARWIN:
-        return extension == ".dylib" || extnesion.contains(".so");
+        return extension == "dylib" || extnesion.contains("so");
     $else
-        return extension == ".so" || extension.contains(".so.");
+        return extension == "so" || extension.contains("so.");
     $endif $endif
 }
 
@@ -263,7 +263,7 @@ fn bool is_executable(String path)
 {
     $if env::WIN32:
         String   extension = path.to_path(mem).extension()!!;
-        String[] exts      = { ".exe", ".bat", ".cmd", ".com", ".msi" };
+        String[] exts      = { "exe", "bat", "cmd", "com", "msi" };
         foreach (ext : exts)
         {
             if (ext == extension) return true;

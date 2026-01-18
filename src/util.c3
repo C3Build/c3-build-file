@@ -116,13 +116,14 @@ fn void? copy_file(String source, String dest)
 fn String format(String string, ProjectInfo* info)
 {
     String result = string;
-    Regex  regex  = &&regex::make_runtime_regex(`(?:\$\()([a-zA-Z0-9]+)(?:\))`, Options.NONE, mem)!!;
+    Regex  regex  = &&regex::make_runtime_regex(`(?:\$\()([a-zA-Z_0-9]+)(?:\))`, Options.NONE, mem)!!;
     MatchIterator iter = regex.iter_matches(string);
 
     while (try match = iter.next())
     {
         String var_name  = match[1].captured;
         if (!info.variables.has_key(var_name)) continue;
+
         String var_value = ((ZString)info.variables.get(var_name)).str_view()!!;
         String format    = string::format(mem, "$(%s)", var_name);
         

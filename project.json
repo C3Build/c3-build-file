@@ -2,7 +2,7 @@
   "langrev": "1",
   "warnings": [ "no-unused" ],
   "authors": [ "Kiana Bennett" ],
-  "version": "0.3.0",
+  "version": "0.3.2",
   "sources": [ "src/**" ],
   "output": "build",
   "targets": {
