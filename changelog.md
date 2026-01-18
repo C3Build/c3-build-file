@@ -1,3 +1,6 @@
+# 0.3.5
+- add `$feature(GIT_HASH)` to `$exec` statements
+
 # 0.3.4
 - add missing return in `fs::is_executable`
 

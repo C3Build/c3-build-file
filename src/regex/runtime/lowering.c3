@@ -376,7 +376,7 @@ fn void? LoweringContext.get_string_build(&self, Node* node, DString* builder) @
 
                 for (uint i = 0; i < node.node_and_number.repeat_count; i++)
                 {
-                    builder.append_string(child_builder);
+                    builder.append_dstring(child_builder);
                 }
             };
         case CONCAT:
